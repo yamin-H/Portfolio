@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-paper: #faf9f5;
+  --color-paper-deep: #efebdf;
+  --color-ink: #16171a;
+  --color-ink-soft: #5a5b60;
+  --color-accent: #2f4bff;
+  --color-rule: #d9d5c8;
+  --color-alert: #c8432b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display-src), Georgia, serif;
+  --font-body: var(--font-body-src), system-ui, sans-serif;
+  --font-mono: var(--font-mono-src), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --ease-draw: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick: 240ms;
+  --dur-settle: 600ms;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body-src), system-ui, sans-serif;
+}
+
+/* ---------- PAPER ---------- */
+:root {
+  --paper-mottle: 0.2;
+  --paper-fiber: 0.1;
+  --paper-grain: 0.09;
+  --paper-vignette: 0.14;
+}
+
+.paper-mottle,
+.paper-glow,
+.paper-fiber,
+.paper-grain,
+.paper-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Under the content: large soft tonal clouds, like uneven pulp */
+.paper-mottle {
+  z-index: -2;
+  opacity: var(--paper-mottle);
+  background-size: 900px 900px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0035' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.62 0 0 0 0 0.52 0 0 0 0 0.36 0 0 0 1.1 -0.25'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+}
+
+/* Under the content: soft light falling from the top-left */
+.paper-glow {
+  z-index: -1;
+  background: radial-gradient(
+    ellipse 70% 55% at 12% 0%,
+    rgba(255, 255, 255, 0.75),
+    transparent 65%
+  );
+}
+
+/* Over the content: sparse fibers, then fine grain, then edge falloff */
+.paper-fiber {
+  z-index: 60;
+  opacity: var(--paper-fiber);
+  background-size: 600px 600px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.015 0.6' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.18 0 0 0 2.2 -1.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+}
+
+.paper-grain {
+  z-index: 61;
+  opacity: var(--paper-grain);
+  background-size: 220px 220px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+.paper-vignette {
+  z-index: 62;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    transparent 55%,
+    rgba(120, 95, 55, var(--paper-vignette)) 100%
+  );
+}
+
+/* ---------- GRID ---------- */
+:root {
+  --grid-minor: rgba(47, 75, 255, 0.055);
+  --grid-major: rgba(47, 75, 255, 0.11);
+}
+
+.paper-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  /* cross marks at major intersections, then major lines, then minor lines */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cpath d='M0 .5H6M154 .5H160M.5 0V6M.5 154V160' stroke='%232f4bff' stroke-opacity='.45' fill='none'/%3E%3C/svg%3E"),
+    linear-gradient(to right, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    160px 160px,
+    160px 160px,
+    160px 160px,
+    32px 32px,
+    32px 32px;
+
+  /* strongest near the top center, fading toward the edges */
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 25%,
+    #000 30%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 75% at 50% 25%,
+    #000 30%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+.ink {
+  filter: url(#ink);
 }
