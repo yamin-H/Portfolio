@@ -54,9 +54,10 @@ export const projects: Project[] = [
             "A CLI coding agent that reads and searches a codebase, edits files, and runs commands from any project folder. Works with any model provider.",
         facts: [
             "Published on PyPI: pip install yamin",
+            "Six tools: list, read, search, edit, write, and run commands",
+            "Asks for your approval before any edit, write, or shell command",
             "Groq, OpenAI, Gemini, Claude, Hugging Face, or any OpenAI-compatible endpoint such as Ollama",
-            "Models fetched live from the chosen provider",
-            "API keys stay on your machine",
+            "Models fetched live from the chosen provider; API keys stay on your machine",
         ],
         stack: ["Python", "PyPI", "Packaging", "CLI"],
         links: [

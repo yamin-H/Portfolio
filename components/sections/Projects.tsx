@@ -1,10 +1,12 @@
 import Reveal from "@/components/ui/Reveal";
 import ProjectPlate from "@/components/sections/ProjectPlate";
+import PrReviewSystem from "@/components/diagrams/pr-review/PrReviewSystem";
 import { projects } from "@/content/projects";
-import PrReviewDiagram from "@/components/diagrams/pr-review/PrReviewDiagram";
+import YaminSystem from "@/components/diagrams/yamin/YaminSystem";
 
 const diagrams: Record<string, React.ReactNode> = {
-  "pr-review-agent": <PrReviewDiagram />,
+    "pr-review-agent": <PrReviewSystem />,
+    yamin: <YaminSystem />,
 };
 
 export default function Projects() {
@@ -21,7 +23,12 @@ export default function Projects() {
 
             <div className="mt-10">
                 {projects.map((p, i) => (
-                    <ProjectPlate key={p.slug} project={p} flip={i % 2 === 1} diagram={diagrams[p.slug]} />
+                    <ProjectPlate
+                        key={p.slug}
+                        project={p}
+                        flip={i % 2 === 1}
+                        diagram={diagrams[p.slug]}
+                    />
                 ))}
             </div>
         </section>

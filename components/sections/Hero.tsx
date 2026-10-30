@@ -2,6 +2,7 @@ import Reveal from "@/components/ui/Reveal";
 import CopyChip from "@/components/ui/CopyChip";
 import CornerFrame from "@/components/ui/CornerFrame";
 import InkUnderline from "@/components/ui/InkUnderline";
+import MemoryWall from "@/components/hero/MemoryWall";
 
 export default function Hero() {
     return (
@@ -47,18 +48,9 @@ export default function Hero() {
 
             <Reveal delay={0.32} className="lg:col-span-5">
                 <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">
-                    Fig_001 · PR Review Agent
+                    Fig_001 · Team memory
                 </p>
-                <CornerFrame className="flex aspect-[4/3] items-center justify-center p-6">
-                    <p className="text-center font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-ink-soft/70">
-                        System design figure
-                        <br />
-                        goes here
-                    </p>
-                </CornerFrame>
-                <p className="mt-3 font-mono text-[10px] tracking-[0.12em] text-ink-soft">
-                    Plate 1 of 2. Interactive, coming in a later step.
-                </p>
+                <MemoryWall />
             </Reveal>
         </section>
     );

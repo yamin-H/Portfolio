@@ -3,6 +3,7 @@ type Props = {
   total: number;
   playing: boolean;
   broken: boolean;
+  repairLabel?: string;
   breakLabel: string;
   onRun: () => void;
   onNext: () => void;
@@ -51,7 +52,7 @@ export default function Controls(p: Props) {
                         : "border-ink/70 hover:border-alert hover:text-alert"
                     }`}
             >
-                {p.broken ? "Repair" : p.breakLabel}
+                {p.broken ? p.repairLabel ?? "Repair" : p.breakLabel}
             </button>
 
             <div className="ml-auto flex items-center gap-1.5" aria-hidden="true">
