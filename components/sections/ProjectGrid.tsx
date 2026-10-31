@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Reveal from "@/components/ui/Reveal";
 import ProjectCard from "@/components/sections/ProjectCard";
 import { ease } from "@/lib/motion";
-import { archive } from "@/content/archive";
+import { archive, SHOW_GRID } from "@/content/archive";
 
 export default function ProjectGrid() {
   const reduce = useReducedMotion() ?? false;
@@ -15,13 +15,14 @@ export default function ProjectGrid() {
     () => ["All", ...Array.from(new Set(archive.flatMap((p) => p.tags)))],
     []
   );
-  const shown = archive.filter((p) => tag === "All" || p.tags.includes(tag));
+    const shown = archive.filter((p) => tag === "All" || p.tags.includes(tag));
+    if (!SHOW_GRID) return null;
 
     return (
         <section id="projects" className="mx-auto max-w-6xl px-6 py-24 sm:px-8">
             <Reveal inView>
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-                    02 · Projects
+                    Projects
                 </p>
                 <h2 className="mt-4 max-w-2xl font-display text-4xl leading-tight tracking-tight sm:text-5xl">
                     Everything I&apos;ve built.

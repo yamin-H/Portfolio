@@ -12,11 +12,11 @@ import { ease } from "@/lib/motion";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { contributions } from "@/content/contributions";
-
+import { SHOW_GRID } from "@/content/archive";
 
 type Item =
   | { kind: "page"; label: string; hint: string; href: string }
-  | { kind: "section"; label: string; hint: string; id: string; num?: string }
+  | { kind: "section"; label: string; hint: string; id: string }
   | { kind: "external"; label: string; hint: string; href: string; download?: string }
   | { kind: "copy"; label: string; hint: string; text: string };
 
@@ -50,8 +50,10 @@ const baseGroups: Group[] = [
           href: `/projects/${p.slug}`,
         })
       ),
-      { kind: "section", id: "projects", label: "All projects", hint: "The full grid", num: "02" },
-      { kind: "section", id: "open-source", label: "Open source", hint: `${prCount} merged pull requests`, num: "03" },
+      ...(SHOW_GRID
+        ? [{ kind: "section", id: "projects", label: "All projects", hint: "The full grid" } as Item]
+        : []),
+      { kind: "section", id: "open-source", label: "Open source", hint: `${prCount} merged pull requests` },
     ],
   },
   {
@@ -62,12 +64,10 @@ const baseGroups: Group[] = [
     blurb: "What I work with, and how I think about the work.",
     ids: ["skills", "about"],
     items: [
-      { kind: "section", id: "skills", label: "Skills", hint: "Tools, tied to what I built", num: "04" },
-      { kind: "section", id: "about", label: "How I work", hint: "Three principles", num: "05" },
+      { kind: "section", id: "skills", label: "Skills", hint: "Tools, tied to what I built" },
+      { kind: "section", id: "about", label: "How I work", hint: "Three principles" },
       { kind: "section", id: "education", label: "Education", hint: "Varendra University · BEng, EEE" },
-      ...(profile.resume
-        ? [{ kind: "external", label: "Résumé", hint: "PDF · opens in a new tab", href: profile.resume } as Item]
-        : []),
+      { kind: "page", label: "Résumé", hint: "Web version · save as PDF", href: "/resume" },
     ],
   },
   {
@@ -108,7 +108,6 @@ const rowCls =
 function Row({ item, done }: { item: Item; done: () => void }) {
   const [copied, setCopied] = useState(false);
 
-  const num = item.kind === "section" && item.num ? item.num : "";
   const arrow =
     item.kind === "page"
       ? "→"
@@ -123,9 +122,6 @@ function Row({ item, done }: { item: Item; done: () => void }) {
 
   const inner = (
     <>
-      <span className="w-5 shrink-0 font-mono text-[10px] tracking-[0.16em] text-accent">
-        {num}
-      </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[15px]">{item.label}</span>
         <span className="mt-0.5 block truncate font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft">
@@ -475,16 +471,13 @@ export default function Navbar({ writing = [] }: { writing?: WritingLink[] }) {
 
         {/* actions */}
         <div onPointerEnter={away} className="flex shrink-0 items-center gap-3">
-          {profile.resume && (
-            <a
-              href={profile.resume}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden whitespace-nowrap border border-ink/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors duration-[240ms] hover:border-accent hover:text-accent lg:inline-block"
-            >
-              Résumé
-            </a>
-          )}
+          <TLink
+            href="/resume"
+            label="Résumé"
+            className="hidden whitespace-nowrap border border-ink/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors duration-[240ms] hover:border-accent hover:text-accent lg:inline-block"
+          >
+            Résumé
+          </TLink>
 
           <button
             type="button"

@@ -3,6 +3,7 @@ import EmailChip from "@/components/ui/EmailChip";
 import InkUnderline from "@/components/ui/InkUnderline";
 import Note from "@/components/ui/Note";
 import { profile } from "@/content/profile";
+import TLink from "@/components/ui/TLink";
 
 export default function Contact() {
   const links = [
@@ -17,7 +18,7 @@ export default function Contact() {
         >
             <Reveal inView>
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-                    07 · Contact
+                    Contact
                 </p>
                 <h2 className="mt-4 max-w-4xl font-display text-5xl leading-[1.03] tracking-tight sm:text-7xl">
                     Let&apos;s build something that{" "}
@@ -30,6 +31,9 @@ export default function Contact() {
                     Open to full-stack and AI engineering work. Tell me what you&apos;re
                     building.
                 </p>
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft">
+                    {profile.location} · {profile.utc} · {profile.availability}
+                </p>
             </Reveal>
 
             <Reveal inView delay={0.1} className="mt-12">
@@ -39,14 +43,13 @@ export default function Contact() {
 
             {profile.resume && (
                 <Reveal inView delay={0.12} className="mt-8 flex flex-wrap gap-3">
-                    <a
-                        href={profile.resume}
-                        target="_blank"
-                        rel="noreferrer"
+                    <TLink
+                        href="/resume"
+                        label="Résumé"
                         className="inline-flex items-center gap-2 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper transition-colors duration-[240ms] hover:bg-accent"
                     >
-                        View résumé <span aria-hidden="true">↗</span>
-                    </a>
+                        View résumé <span aria-hidden="true">→</span>
+                    </TLink>
                     <a
                         href={profile.resume}
                         download="Yamin_Hossain_Resume.pdf"

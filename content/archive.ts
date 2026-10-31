@@ -53,3 +53,7 @@ export const archive: ArchiveProject[] = [
   //   links: [{ label: "GitHub", href: "https://github.com/..." }],
   // },
 ];
+
+// The grid appears once there are enough projects to fill it. With two it only repeats Work.
+export const MIN_GRID = 4;
+export const SHOW_GRID = archive.length >= MIN_GRID;

@@ -7,6 +7,7 @@ import { usePageTransition } from "@/components/ui/PageTransition";
 import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { ease } from "@/lib/motion";
+import { SHOW_GRID } from "@/content/archive";
 
 type Item = {
   id: string;
@@ -24,7 +25,7 @@ const sections = [
   { id: "skills", label: "Skills" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
-];
+].filter((m) => m.id !== "projects" || SHOW_GRID);
 
 export default function CommandPalette() {
   const reduce = useReducedMotion();
@@ -44,12 +45,13 @@ export default function CommandPalette() {
     };
     const out: Item[] = [
       ...sections.map((s) => ({
-        id: `s-${s.id}`,
+        
+        id: "s-resume",
         group: "Go to",
-        label: s.label,
-        hint: "Section",
-        keys: s.id,
-        run: () => go(`/#${s.id}`, "Home"),
+        label: "Résumé",
+        hint: "Web version",
+        keys: "resume cv curriculum",
+        run: () => go("/resume", "Résumé"),
       })),
       {
   id: "s-writing",

@@ -6,4 +6,8 @@ export const profile = {
   github: "https://github.com/yamin-H", // e.g. https://github.com/yourname
   linkedin: "https://www.linkedin.com/in/yamin-hossain-n/", // e.g. https://linkedin.com/in/yourname
   resume: "/Yamin_Hossain_Resume.pdf",
+  location: "Rajshahi, Bangladesh",
+  timezone: "Asia/Dhaka", // used for the live local time
+  utc: "UTC+6",
+  availability: "Open to remote work and relocation", // edit to what is true for you
 };

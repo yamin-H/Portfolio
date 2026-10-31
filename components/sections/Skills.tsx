@@ -113,7 +113,7 @@ export default function Skills() {
         <section id="skills" className="mx-auto max-w-6xl px-6 py-24 sm:px-8">
             <Reveal inView>
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-                    03 · Skills
+                    Skills
                 </p>
                 <h2 className="mt-4 max-w-2xl font-display text-4xl leading-tight tracking-tight sm:text-5xl">
                     Tools, tied to what I actually built with them.

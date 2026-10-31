@@ -7,6 +7,7 @@ const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").repla
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: base },
+    { url: `${base}/resume` },
     { url: `${base}/writing` },
     ...getAllPosts().map((p) => ({
       url: `${base}/writing/${p.slug}`,

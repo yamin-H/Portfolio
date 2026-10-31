@@ -338,3 +338,34 @@ html.lite header {
   width: max-content;
   min-width: 100%;
 }
+
+/* ---------- PRINT ---------- */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .paper-mottle,
+  .paper-grid,
+  .paper-glow,
+  .paper-fiber,
+  .paper-grain,
+  .paper-vignette,
+  .paper-cursor {
+    display: none !important;
+  }
+}
+
+/* ---------- SECTION NUMBERS ---------- */
+#main {
+  counter-reset: sec;
+}
+.sec-eyebrow {
+  counter-increment: sec;
+}
+.sec-eyebrow::before {
+  content: counter(sec, decimal-leading-zero) " · ";
+}

@@ -2,16 +2,18 @@ import InkLine from "@/components/ui/InkLine";
 import Logo from "@/components/ui/Logo";
 import { profile } from "@/content/profile";
 import TLink from "@/components/ui/TLink";
+import { SHOW_GRID } from "@/content/archive";
 
 const nav = [
   { label: "Work", href: "#work" },
   { label: "Projects", href: "#projects" },
+  { label: "Open source", href: "#open-source" },
   { label: "Skills", href: "#skills" },
   { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
   { label: "Writing", href: "/writing" },
-];
-
+  { label: "Résumé", href: "/resume" },
+  { label: "Contact", href: "#contact" },
+].filter((n) => n.href !== "#projects" || SHOW_GRID);
 function Cell({
   label,
   children,
