@@ -36,6 +36,8 @@ const diff = [
   return `M${x1} ${y1} L${x2} ${y2}`;
 });
 
+const diffInk = ["stroke-alert", "stroke-add", "stroke-add", "stroke-ink-soft"];
+
 export default function IsoGithub({
   state = "idle",
   label = "GITHUB · WEBHOOK",
@@ -45,93 +47,93 @@ export default function IsoGithub({
 }) {
   const active = state === "active";
 
-    return (
-        <BlockFrame
-            state={state}
-            label={label}
-            ariaLabel={`Isometric GitHub block, ${state}`}
-            leaderEnd={-148}
-            ground={<polygon points={main.ground} className="fill-ink/10" />}
-        >
-            {({ tone, fade, reduce }) => (
-                <>
-                    <polygon
-                        points={main.left}
-                        strokeWidth={1.6}
-                        className={`fill-paper-deep ${tone.edge} ${fade}`}
-                    />
-                    <polygon
-                        points={main.right}
-                        strokeWidth={1.6}
-                        className={`fill-paper-deep ${tone.edge} ${fade}`}
-                    />
-                    <Hatch lines={leftHatch} className={`${tone.hatch} ${fade}`} />
-                    <Hatch lines={rightHatch} className={`${tone.hatch} ${fade}`} />
+  return (
+    <BlockFrame
+      state={state}
+      label={label}
+      ariaLabel={`Isometric GitHub block, ${state}`}
+      leaderEnd={-148}
+      ground={<polygon points={main.ground} className="fill-ink/10" />}
+    >
+      {({ tone, fade, reduce }) => (
+        <>
+          <polygon
+            points={main.left}
+            strokeWidth={1.6}
+            className={`fill-paper-deep ${tone.edge} ${fade}`}
+          />
+          <polygon
+            points={main.right}
+            strokeWidth={1.6}
+            className={`fill-paper-deep ${tone.edge} ${fade}`}
+          />
+          <Hatch lines={leftHatch} className={`${tone.hatch} ${fade}`} />
+          <Hatch lines={rightHatch} className={`${tone.hatch} ${fade}`} />
 
-                    {/* webhook port */}
-                    <circle
-                        cx={-22}
-                        cy={-25}
-                        r={4}
-                        strokeWidth={1.2}
-                        className={`${tone.pill} ${fade}`}
-                    />
+          {/* webhook port */}
+          <circle
+            cx={-22}
+            cy={-25}
+            r={4}
+            strokeWidth={1.2}
+            className={`${tone.pill} ${fade}`}
+          />
 
-                    <polygon
-                        points={main.top}
-                        strokeWidth={1.6}
-                        className={`fill-paper ${tone.edge} ${fade}`}
-                    />
-                    <polygon
-                        points={main.top}
-                        stroke="none"
-                        className={`${tone.tint} ${fade}`}
-                    />
+          <polygon
+            points={main.top}
+            strokeWidth={1.6}
+            className={`fill-paper ${tone.edge} ${fade}`}
+          />
+          <polygon
+            points={main.top}
+            stroke="none"
+            className={`${tone.tint} ${fade}`}
+          />
 
-                    {/* PR card */}
-                    <motion.g
-                        initial={false}
-                        animate={{ y: active ? -8 : 0 }}
-                        transition={{ duration: reduce ? 0 : 0.5, ease }}
-                    >
-                        <polygon
-                            points={card.left}
-                            strokeWidth={1.2}
-                            className={`fill-paper-deep ${tone.edge} ${fade}`}
-                        />
-                        <polygon
-                            points={card.right}
-                            strokeWidth={1.2}
-                            className={`fill-paper ${tone.edge} ${fade}`}
-                        />
-                        <polygon
-                            points={card.top}
-                            strokeWidth={1.2}
-                            className={`fill-paper ${tone.edge} ${fade}`}
-                        />
+          {/* PR card */}
+          <motion.g
+            initial={false}
+            animate={{ y: active ? -8 : 0 }}
+            transition={{ duration: reduce ? 0 : 0.5, ease }}
+          >
+            <polygon
+              points={card.left}
+              strokeWidth={1.2}
+              className={`fill-paper-deep ${tone.edge} ${fade}`}
+            />
+            <polygon
+              points={card.right}
+              strokeWidth={1.2}
+              className={`fill-paper ${tone.edge} ${fade}`}
+            />
+            <polygon
+              points={card.top}
+              strokeWidth={1.2}
+              className={`fill-paper ${tone.edge} ${fade}`}
+            />
 
-                        {/* diff lines redraw each time the block becomes active */}
-                        <g key={active ? "a" : "i"}>
-                            {diff.map((d, i) => (
-                                <motion.path
-                                    key={i}
-                                    d={d}
-                                    fill="none"
-                                    strokeWidth={1.5}
-                                    className={`${tone.edge} ${fade}`}
-                                    initial={{ pathLength: active ? 0 : 1 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{
-                                        duration: reduce ? 0 : 0.45,
-                                        ease,
-                                        delay: reduce || !active ? 0 : 0.2 + i * 0.12,
-                                    }}
-                                />
-                            ))}
-                        </g>
-                    </motion.g>
-                </>
-            )}
-        </BlockFrame>
-    );
+            {/* diff lines redraw each time the block becomes active */}
+            <g key={active ? "a" : "i"}>
+              {diff.map((d, i) => (
+                <motion.path
+                  key={i}
+                  d={d}
+                  fill="none"
+                  strokeWidth={1.5}
+                  className={`${diffInk[i]} ${fade}`}
+                  initial={{ pathLength: active ? 0 : 1 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{
+                    duration: reduce ? 0 : 0.45,
+                    ease,
+                    delay: reduce || !active ? 0 : 0.2 + i * 0.12,
+                  }}
+                />
+              ))}
+            </g>
+          </motion.g>
+        </>
+      )}
+    </BlockFrame>
+  );
 }

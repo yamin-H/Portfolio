@@ -7,6 +7,8 @@ import { tones, fade, type BlockState, type Tone } from "./tones";
 
 /** When true, blocks render as a <g> so a parent SVG can place them. */
 export const BareContext = createContext(false);
+/** When true, a standalone block drops its label and crops tight (used in cards). */
+export const CompactContext = createContext(false);
 
 type Props = {
   state: BlockState;
@@ -32,6 +34,7 @@ export default function BlockFrame({
   children,
 }: Props) {
   const bare = useContext(BareContext);
+  const compact = useContext(CompactContext);
   const reduce = useReducedMotion() ?? false;
   const tone = tones[state];
   const dur = reduce ? 0 : 0.6;
@@ -53,36 +56,40 @@ export default function BlockFrame({
             </motion.g>
 
             {/* label pill + leader line */}
-            <line
-                x1={cx}
-                y1={-178}
-                x2={cx}
-                y2={leaderEnd}
-                strokeWidth={1}
-                strokeDasharray="3 3"
-                className={`${tone.leader} ${fade}`}
-            />
-            <g>
-                <rect
-                    x={cx - pillW / 2}
-                    y={-198}
-                    width={pillW}
-                    height={20}
-                    rx={10}
-                    strokeWidth={1.2}
-                    className={`${tone.pill} ${fade}`}
-                />
-                <text
-                    x={cx}
-                    y={-184.5}
-                    textAnchor="middle"
-                    fontSize="9"
-                    letterSpacing="1.4"
-                    className={`font-mono ${tone.pillText} ${fade}`}
-                >
-                    {label}
-                </text>
-            </g>
+            {!compact && (
+                <>
+                    <line
+                        x1={cx}
+                        y1={-178}
+                        x2={cx}
+                        y2={leaderEnd}
+                        strokeWidth={1}
+                        strokeDasharray="3 3"
+                        className={`${tone.leader} ${fade}`}
+                    />
+                    <g>
+                        <rect
+                            x={cx - pillW / 2}
+                            y={-198}
+                            width={pillW}
+                            height={20}
+                            rx={10}
+                            strokeWidth={1.2}
+                            className={`${tone.pill} ${fade}`}
+                        />
+                        <text
+                            x={cx}
+                            y={-184.5}
+                            textAnchor="middle"
+                            fontSize="9"
+                            letterSpacing="1.4"
+                            className={`font-mono ${tone.pillText} ${fade}`}
+                        >
+                            {label}
+                        </text>
+                    </g>
+                </>
+            )}
 
             {/* the block: outer group lifts and shakes, inner group is inked */}
             <motion.g
@@ -103,12 +110,14 @@ export default function BlockFrame({
         </>
     );
 
-  if (bare) return <g>{body}</g>;
+    if (bare) return <g>{body}</g>;
 
     return (
         <svg
-            viewBox="-110 -215 260 240"
-            className="mx-auto w-full max-w-md"
+            viewBox={compact ? "-100 -190 240 218" : "-110 -215 260 240"}
+            className={
+                compact ? "mx-auto block w-full" : "mx-auto w-full max-w-md"
+            }
             role="img"
             aria-label={ariaLabel}
         >

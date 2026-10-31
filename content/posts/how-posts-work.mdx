@@ -1,0 +1,62 @@
+---
+title: "How posts work on this site"
+summary: "A draft that shows every building block. Copy it, change it, publish it."
+date: "2026-10-31"
+type: "post"
+tags: ["meta"]
+draft: true
+---
+
+This file is a template. Everything below is something you can use in your own posts. While `draft: true` is set, it shows up in development only.
+
+## Headings build the sidebar
+
+Every `##` and `###` heading appears in the sidebar on the right, and the sidebar follows you as you scroll.
+
+### Sub-headings nest underneath
+
+Keep sections short, and give each one a heading that says what it answers.
+
+## Code
+
+```python
+import asyncio
+
+async def with_backoff(call, retries=3):
+    for attempt in range(retries):
+        try:
+            return await call()
+        except Exception:
+            await asyncio.sleep(2 ** attempt)
+    raise RuntimeError("gave up")
+```
+
+Inline code, like `pgvector`, looks like this.
+
+## Diagrams from this site
+
+<Block kind="queue" state="active" label="QUEUE" caption="Any block from the interactive diagrams can be dropped into a post." />
+
+## Callouts, quotes and lists
+
+<Callout title="Note">Use a callout for one idea you do not want skimmed past.</Callout>
+
+> A quote is set in the display serif.
+
+- Lists get square blue bullets.
+- Keep them short.
+
+1. Numbered lists use mono numerals.
+2. Use them for steps.
+
+## Your own images
+
+Put an image in `public/writing/how-posts-work/` and add it like this:
+
+```mdx
+<Figure src="/writing/how-posts-work/pipeline.png" caption="The request path" n={1} w={1600} h={900} />
+```
+
+---
+
+That is everything. Delete this file when you are done, or keep it as a reference.

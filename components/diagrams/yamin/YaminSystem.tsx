@@ -36,8 +36,17 @@ import ProviderPicker from "./ProviderPicker";
 const TOTAL = 6;
 const WIDE = { ...layouts.wide, h: 540 }; // a little extra room for the approval badge
 
+const mats = [
+  "mat mat-terminal",
+  "mat mat-agent",
+  "mat mat-provider",
+  "mat mat-tools",
+  "mat mat-gate",
+  "mat mat-result",
+];
+
 const dwell = (stop: number, denied: boolean) =>
-  denied && stop === 4 ? DWELL_DENIED : DWELL;
+    denied && stop === 4 ? DWELL_DENIED : DWELL;
 
 export default function YaminSystem() {
   const reduce = useReducedMotion() ?? false;
@@ -279,7 +288,7 @@ export default function YaminSystem() {
                                                 togglePin(k);
                                             }
                                         }}
-                                        className="group cursor-pointer outline-none"
+                                        className={`${mats[k]} group cursor-pointer outline-none`}
                                     >
                                         <rect
                                             x={-100}

@@ -110,7 +110,7 @@ export default function IsoTerminal({
                                     d={d}
                                     fill="none"
                                     strokeWidth={1.5}
-                                    className={`${tone.edge} ${fade}`}
+                                    className={`stroke-phosphor ${fade}`}
                                     initial={{ pathLength: active ? 0 : 1 }}
                                     animate={{ pathLength: 1 }}
                                     transition={{

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <rect width="120" height="120" rx="24" fill="#faf9f5"/>
+  <g transform="translate(60 60) scale(0.8) translate(-60 -60)" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <polygon points="60,60 103.3,35 103.3,85 60,110" fill="#16171a" fill-opacity="0.14"/>
+    <polygon points="60,10 103.3,35 103.3,85 60,110 16.7,85 16.7,35" stroke="#16171a" stroke-width="7"/>
+    <path d="M16.7 35 L60 60 L103.3 35 M60 60 L60 110" stroke="#2f4bff" stroke-width="9"/>
+  </g>
+</svg>

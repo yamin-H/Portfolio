@@ -1,6 +1,7 @@
 import Reveal from "@/components/ui/Reveal";
 import CornerFrame from "@/components/ui/CornerFrame";
 import InkLine from "@/components/ui/InkLine";
+import TLink from "@/components/ui/TLink";
 import type { Project } from "@/content/projects";
 
 function Heading({ project }: { project: Project }) {
@@ -19,7 +20,7 @@ function Heading({ project }: { project: Project }) {
   );
 }
 
-function Facts({ facts }: { facts: string[] }) {
+export function Facts({ facts }: { facts: string[] }) {
   return (
     <ul className="space-y-3">
       {facts.map((f) => (
@@ -32,7 +33,7 @@ function Facts({ facts }: { facts: string[] }) {
   );
 }
 
-function StackAndLinks({ project }: { project: Project }) {
+export function StackAndLinks({ project }: { project: Project }) {
   const links = project.links.filter((l) => l.href);
   return (
     <>
@@ -66,6 +67,18 @@ function StackAndLinks({ project }: { project: Project }) {
   );
 }
 
+function CaseLink({ project }: { project: Project }) {
+  return (
+    <TLink
+      href={`/projects/${project.slug}`}
+      label={project.title}
+      className="mt-8 inline-flex items-center gap-2 border border-ink/70 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-[240ms] hover:border-accent hover:text-accent"
+    >
+      Read the case study <span aria-hidden="true">→</span>
+    </TLink>
+  );
+}
+
 export default function ProjectPlate({
   project,
   flip = false,
@@ -96,6 +109,7 @@ export default function ProjectPlate({
               <Facts facts={project.facts} />
               <div className="mt-8">
                 <StackAndLinks project={project} />
+                <CaseLink project={project} />
               </div>
             </Reveal>
           </div>
@@ -134,6 +148,7 @@ export default function ProjectPlate({
                     <Reveal inView delay={0.14}>
                         <div className="mt-8">
                             <StackAndLinks project={project} />
+                            <CaseLink project={project} />
                         </div>
                     </Reveal>
                 </div>

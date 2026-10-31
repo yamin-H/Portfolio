@@ -1,33 +1,64 @@
 import Reveal from "@/components/ui/Reveal";
-import CopyChip from "@/components/ui/CopyChip";
+import EmailChip from "@/components/ui/EmailChip";
 import InkUnderline from "@/components/ui/InkUnderline";
+import Note from "@/components/ui/Note";
 import { profile } from "@/content/profile";
 
 export default function Contact() {
   const links = [
     { label: "GitHub", href: profile.github },
     { label: "LinkedIn", href: profile.linkedin },
-    { label: "Resume", href: profile.resume },
   ].filter((l) => l.href);
 
     return (
-        <section id="contact" className="mx-auto max-w-6xl px-6 pb-28 pt-24 sm:px-8">
+        <section
+            id="contact"
+            className="mx-auto max-w-6xl px-6 pb-28 pt-24 sm:px-8"
+        >
             <Reveal inView>
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent">
-                    04 · Contact
+                    07 · Contact
                 </p>
-                <h2 className="mt-4 max-w-3xl font-display text-5xl leading-[1.05] tracking-tight sm:text-6xl">
+                <h2 className="mt-4 max-w-4xl font-display text-5xl leading-[1.03] tracking-tight sm:text-7xl">
                     Let&apos;s build something that{" "}
-                    <InkUnderline delay={0.3}>
+                    <InkUnderline inView delay={0.3}>
                         <em>ships</em>
                     </InkUnderline>
                     .
                 </h2>
+                <p className="mt-8 max-w-xl text-lg leading-relaxed text-ink-soft">
+                    Open to full-stack and AI engineering work. Tell me what you&apos;re
+                    building.
+                </p>
             </Reveal>
 
-            <Reveal inView delay={0.1} className="mt-10 flex flex-wrap items-center gap-6">
-                <CopyChip text={profile.email} prompt="" />
-                <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Reveal inView delay={0.1} className="mt-12">
+                <EmailChip email={profile.email} />
+                <Note className="mt-5">the fastest way to reach me</Note>
+            </Reveal>
+
+            {profile.resume && (
+                <Reveal inView delay={0.12} className="mt-8 flex flex-wrap gap-3">
+                    <a
+                        href={profile.resume}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper transition-colors duration-[240ms] hover:bg-accent"
+                    >
+                        View résumé <span aria-hidden="true">↗</span>
+                    </a>
+                    <a
+                        href={profile.resume}
+                        download="Yamin_Hossain_Resume.pdf"
+                        className="inline-flex items-center gap-2 border border-ink/70 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-[240ms] hover:border-accent hover:text-accent"
+                    >
+                        Download PDF <span aria-hidden="true">↓</span>
+                    </a>
+                </Reveal>
+            )}
+
+            {links.length > 0 && (
+                <Reveal inView delay={0.14} className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
                     {links.map((l) => (
                         <a
                             key={l.label}
@@ -39,7 +70,16 @@ export default function Contact() {
                             {l.label} ↗
                         </a>
                     ))}
-                </div>
+                </Reveal>
+            )}
+
+            <Reveal inView delay={0.18} className="mt-16">
+                <p className="text-ink-soft">
+                    —{" "}
+                    <InkUnderline inView delay={0.4}>
+                        <span className="font-display text-4xl italic text-ink">Yamin</span>
+                    </InkUnderline>
+                </p>
             </Reveal>
         </section>
     );

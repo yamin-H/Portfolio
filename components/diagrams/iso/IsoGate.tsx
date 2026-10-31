@@ -114,8 +114,8 @@ export default function IsoGate({
                                 key={i}
                                 d={d}
                                 fill="none"
-                                strokeWidth={1}
-                                className={`${tone.hatch} ${fade}`}
+                                strokeWidth={3.4}
+                                className={`stroke-ink/85 ${fade}`}
                             />
                         ))}
                     </motion.g>

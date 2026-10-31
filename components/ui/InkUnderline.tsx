@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from "motion/react";
@@ -7,10 +6,16 @@ import { ease } from "@/lib/motion";
 export default function InkUnderline({
   children,
   delay = 0.4,
+  inView = false,
 }: {
   children: React.ReactNode;
   delay?: number;
+  inView?: boolean;
 }) {
+  const trigger = inView
+    ? { whileInView: { pathLength: 1 }, viewport: { once: true } }
+    : { animate: { pathLength: 1 } };
+
     return (
         <span className="relative inline-block">
             {children}
@@ -28,7 +33,7 @@ export default function InkUnderline({
                     strokeWidth="1.6"
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
+                    {...trigger}
                     transition={{ duration: 0.9, ease, delay }}
                 />
             </svg>

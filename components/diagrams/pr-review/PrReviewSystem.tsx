@@ -51,6 +51,15 @@ const blocks = [IsoGithub, IsoQueue, IsoWorker, IsoGraph, IsoVectors, IsoReview]
 const dwell = (stop: number, broken: boolean) =>
   broken && stop === 1 ? DWELL_QUEUE_DOWN : DWELL;
 
+const mats = [
+  "mat mat-github",
+  "mat mat-queue",
+  "mat mat-worker",
+  "mat mat-graph",
+  "mat mat-vectors",
+  "mat mat-review",
+];
+
 /** One connector. Its drawn length is read straight off the timeline position. */
 function EdgeLine({
   k,
@@ -292,7 +301,7 @@ export default function PrReviewSystem() {
                                                 togglePin(k);
                                             }
                                         }}
-                                        className="group cursor-pointer outline-none"
+                                        className={`${mats[k]} group cursor-pointer outline-none`}
                                     >
                                         <rect
                                             x={-100}

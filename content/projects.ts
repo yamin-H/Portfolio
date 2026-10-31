@@ -42,6 +42,8 @@ export const projects: Project[] = [
             { label: "Live demo", href: "" },
             { label: "GitHub", href: "" },
             { label: "Video", href: "" },
+            { label: "Live demo", href: "https://ai-pr-reviewer-yamin.vercel.app/" },
+{ label: "Video", href: "https://drive.google.com/file/d/1PmL870cSDw-eZ0LfdkjvHifHRF1iSomc/view" },
         ],
     },
     {
@@ -63,6 +65,7 @@ export const projects: Project[] = [
         links: [
             { label: "PyPI", href: "" },
             { label: "GitHub", href: "" },
+            { label: "PyPI", href: "https://pypi.org/project/yamin/#description" },
         ],
     },
 ];

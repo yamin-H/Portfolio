@@ -8,6 +8,8 @@
   --color-accent: #2f4bff;
   --color-rule: #d9d5c8;
   --color-alert: #c8432b;
+  --color-phosphor: #86e3a5;
+  --color-add: #3f9d63;
 }
 
 @theme inline {
@@ -26,6 +28,10 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body-src), system-ui, sans-serif;
+}
+
+.ink {
+  filter: url(#ink);
 }
 
 /* ---------- PAPER ---------- */
@@ -127,8 +133,56 @@ body {
   );
 }
 
-.ink {
-  filter: url(#ink);
+/* ---------- CURSOR GLOW ---------- */
+/* A warm pool of light that follows the cursor. Inside it, a hidden pencil
+   drafting layer, fixed to the paper, shows through. Behind all content. */
+.paper-cursor {
+  --r: 340px; /* radius of the pool: the one size knob */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.paper-cursor-pool {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle var(--r) at center,
+    rgba(255, 240, 205, 0.5) 0%,
+    rgba(255, 240, 205, 0.22) 38%,
+    rgba(255, 240, 205, 0) 100%
+  );
+}
+
+.paper-cursor-reveal {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask-image: radial-gradient(
+    circle var(--r) at center,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--r) at center,
+    #000 0%,
+    rgba(0, 0, 0, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.paper-cursor-marks {
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform;
 }
 
 /* ---------- SCRUBBER ---------- */
@@ -180,4 +234,107 @@ body {
 }
 .scrub:focus-visible::-moz-range-thumb {
   box-shadow: 0 0 0 4px rgba(47, 75, 255, 0.35);
+}
+
+/* ---------- POLISH ---------- */
+::selection {
+  background: rgba(47, 75, 255, 0.18);
+  color: var(--color-ink);
+}
+
+@layer base {
+  :focus-visible {
+    outline: 1.5px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------- LITE MODE (set automatically on weak devices) ---------- */
+html.lite .ink {
+  filter: none;
+}
+html.lite .paper-cursor {
+  display: none;
+}
+html.lite [class*="backdrop-blur"] {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+html.lite header {
+  background-color: var(--color-paper);
+}
+
+/* ---------- BLOCK MATERIALS ---------- */
+:root {
+  --wash: 100%; /* colour strength: lower it to fade every block toward the paper */
+  --led: #6fbf86;
+}
+
+.mat {
+  --f1: color-mix(in srgb, var(--m1-light) var(--wash), var(--color-paper));
+  --f2: color-mix(in srgb, var(--m1-mid) var(--wash), var(--color-paper));
+  --f3: color-mix(in srgb, var(--m1-dark) var(--wash), var(--color-paper));
+  --g1: color-mix(in srgb, var(--m2-light) var(--wash), var(--color-paper));
+  --g2: color-mix(in srgb, var(--m2-mid) var(--wash), var(--color-paper));
+  --g3: color-mix(in srgb, var(--m2-dark) var(--wash), var(--color-paper));
+}
+
+/* the base slab: direct children of the ink group */
+.mat .ink > polygon.fill-paper,
+.mat .ink > ellipse.fill-paper { fill: var(--f1); }
+.mat .ink > polygon.fill-paper-deep,
+.mat .ink > path.fill-paper-deep { fill: var(--f2); }
+.mat .ink > polygon:nth-of-type(2).fill-paper-deep { fill: var(--f3); }
+.mat .ink > circle.fill-paper { fill: var(--led); }
+
+/* the parts standing on it: inside a nested group */
+.mat .ink > g polygon.fill-paper,
+.mat .ink > g ellipse.fill-paper { fill: var(--g1); }
+.mat .ink > g polygon.fill-paper-deep,
+.mat .ink > g path.fill-paper-deep { fill: var(--g2); }
+.mat .ink > g polygon:nth-of-type(2).fill-paper-deep { fill: var(--g3); }
+
+/* slab = m1, parts = m2 (light / mid / dark) */
+.mat-github   { --m1-light:#d3d6da; --m1-mid:#aab0b8; --m1-dark:#7e858f; --m2-light:#fbfaf4; --m2-mid:#e4dfd0; --m2-dark:#cfc9b6; }
+.mat-queue    { --m1-light:#f3dc9e; --m1-mid:#dcb862; --m1-dark:#b88f3a; --m2-light:#fff6dc; --m2-mid:#efd896; --m2-dark:#d9b865; }
+.mat-worker   { --m1-light:#a8d5b2; --m1-mid:#78b08a; --m1-dark:#4f8a66; --m2-light:#eef5dc; --m2-mid:#cfe0b0; --m2-dark:#aac683; }
+.mat-graph    { --m1-light:#dcd2f0; --m1-mid:#b9a9e0; --m1-dark:#8f7cc4; --m2-light:#f4effb; --m2-mid:#d3c6ee; --m2-dark:#b3a1dd; }
+.mat-vectors  { --m1-light:#a7dcd9; --m1-mid:#6fb8b6; --m1-dark:#3f8f8e; --m2-light:#a7dcd9; --m2-mid:#6fb8b6; --m2-dark:#3f8f8e; }
+.mat-review   { --m1-light:#f3d3ca; --m1-mid:#e0aa9d; --m1-dark:#c4806f; --m2-light:#fff5f1; --m2-mid:#f1d8d0; --m2-dark:#e0b8ac; }
+.mat-terminal { --m1-light:#d3d6da; --m1-mid:#aab0b8; --m1-dark:#7e858f; --m2-light:#1f2b27; --m2-mid:#17211e; --m2-dark:#101816; }
+.mat-agent    { --m1-light:#dcd2f0; --m1-mid:#b9a9e0; --m1-dark:#8f7cc4; --m2-light:#efe2f6; --m2-mid:#d2b5e3; --m2-dark:#b392c9; }
+.mat-provider { --m1-light:#f5cfa6; --m1-mid:#e2a874; --m1-dark:#c07f4a; --m2-light:#f5cfa6; --m2-mid:#e2a874; --m2-dark:#c07f4a; }
+.mat-tools    { --m1-light:#a7dcd9; --m1-mid:#6fb8b6; --m1-dark:#3f8f8e; --m2-light:#eaf6f5; --m2-mid:#c1e2df; --m2-dark:#99ccc8; }
+.mat-gate     { --m1-light:#d3d6da; --m1-mid:#aab0b8; --m1-dark:#7e858f; --m2-light:#f7dc4f; --m2-mid:#e2c02f; --m2-dark:#bf9d17; }
+.mat-result   { --m1-light:#bfe0c4; --m1-mid:#93c49f; --m1-dark:#689f78; --m2-light:#f3faf4; --m2-mid:#d3e8d7; --m2-dark:#b3d4ba; }
+
+
+/* ---------- CODE BLOCKS ---------- */
+:root {
+  --shiki-foreground: #16171a;
+  --shiki-background: transparent;
+  --shiki-token-constant: #b4551d;
+  --shiki-token-string: #3f7d58;
+  --shiki-token-string-expression: #3f7d58;
+  --shiki-token-comment: #8a877c;
+  --shiki-token-keyword: #2f4bff;
+  --shiki-token-parameter: #16171a;
+  --shiki-token-function: #7a4fb8;
+  --shiki-token-punctuation: #5a5b60;
+  --shiki-token-link: #2f4bff;
+}
+
+.shiki {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.75;
+  tab-size: 2;
+}
+.shiki code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
 }

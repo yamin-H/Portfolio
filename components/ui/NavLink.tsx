@@ -3,26 +3,36 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ease } from "@/lib/motion";
+import TLink from "@/components/ui/TLink";
 
 export default function NavLink({
   href,
   index,
+  current = false,
+  label,
+  className = "",
   children,
 }: {
   href: string;
   index: string;
+  current?: boolean;
+  label?: string;
+  className?: string;
   children: React.ReactNode;
 }) {
   const [hot, setHot] = useState(false);
+  const on = hot || current;
 
     return (
-        <a
+        <TLink
             href={href}
+            label={label}
             onMouseEnter={() => setHot(true)}
             onMouseLeave={() => setHot(false)}
             onFocus={() => setHot(true)}
             onBlur={() => setHot(false)}
-            className="relative font-mono text-[11px] uppercase tracking-[0.18em] text-ink-soft transition-colors duration-[240ms] hover:text-ink focus-visible:text-ink"
+            className={`relative font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-[240ms] hover:text-ink focus-visible:text-ink ${current ? "text-ink" : "text-ink-soft"
+                } ${className}`}
         >
             <span className="mr-1.5 hidden text-accent sm:inline">{index}</span>
             {children}
@@ -40,10 +50,10 @@ export default function NavLink({
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     initial={false}
-                    animate={{ pathLength: hot ? 1 : 0, opacity: hot ? 1 : 0 }}
+                    animate={{ pathLength: on ? 1 : 0, opacity: on ? 1 : 0 }}
                     transition={{ duration: 0.4, ease }}
                 />
             </svg>
-        </a>
+        </TLink>
     );
 }
