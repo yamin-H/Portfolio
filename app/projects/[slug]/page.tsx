@@ -6,10 +6,10 @@ import InkLine from "@/components/ui/InkLine";
 import TLink from "@/components/ui/TLink";
 import Footer from "@/components/sections/Footer";
 import { Facts, StackAndLinks } from "@/components/sections/ProjectPlate";
-import PrReviewSystem from "@/components/diagrams/pr-review/PrReviewSystem";
-import YaminSystem from "@/components/diagrams/yamin/YaminSystem";
 import { projects } from "@/content/projects";
 import { caseStudies } from "@/content/caseStudies";
+import PrReviewFlat from "@/components/diagrams/flat/PrReviewFlat";
+import YaminFlat from "@/components/diagrams/flat/yamin/YaminFlat";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -33,9 +33,9 @@ export default async function CaseStudyPage({ params }: Params) {
   const next = projects.length > 1 ? projects[(i + 1) % projects.length] : null;
   const diagram =
     slug === "pr-review-agent" ? (
-      <PrReviewSystem />
+      <PrReviewFlat />
     ) : slug === "yamin" ? (
-      <YaminSystem />
+      <YaminFlat />
     ) : null;
 
     return (

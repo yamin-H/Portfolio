@@ -11,6 +11,7 @@ import CommandPalette from "@/components/ui/CommandPalette";
 import Navbar from "@/components/sections/Navbar";
 import PerfGuard from "@/components/ui/PerfGuard";
 import { getAllPosts } from "@/lib/posts";
+import Intro from "@/components/ui/Intro";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -51,6 +52,8 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
+const INTRO_SCRIPT = `(function(){var d=document.documentElement;try{var s=sessionStorage.getItem("intro")||location.pathname!=="/"||matchMedia("(prefers-reduced-motion: reduce)").matches;d.dataset.intro=s?"skip":"play"}catch(e){d.dataset.intro="skip"}})()`;
+
 export default function RootLayout({
   children,
 }: {
@@ -60,30 +63,35 @@ export default function RootLayout({
     .slice(0, 3)
     .map(({ slug, title, type }) => ({ slug, title, type }));
 
-    return (
-        <html
-            lang="en"
-            className={`${display.variable} ${body.variable} ${mono.variable}`}
+  return (
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+      </head>
+      <body>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-paper"
         >
-            <body>
-                <a
-                    href="#main"
-                    className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:uppercase focus:tracking-[0.18em] focus:text-paper"
-                >
-                    Skip to content
-                </a>
-                <InkFilter />
-                <PaperLayer />
-                <PaperLight />
-                <PerfGuard />
-                <SmoothScroll>
-                    <PageTransition>
-                        <Navbar writing={writing} />
-                        {children}
-                        <CommandPalette />
-                    </PageTransition>
-                </SmoothScroll>
-            </body>
-        </html>
-    );
+          Skip to content
+        </a>
+        <InkFilter />
+        <PaperLayer />
+        <PaperLight />
+        <Intro />
+        <PerfGuard />
+        <SmoothScroll>
+          <PageTransition>
+            <Navbar writing={writing} />
+            {children}
+            <CommandPalette />
+          </PageTransition>
+        </SmoothScroll>
+      </body>
+    </html>
+  );
 }

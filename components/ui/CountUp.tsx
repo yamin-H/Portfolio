@@ -28,16 +28,18 @@ export default function CountUp({
     return () => c.stop();
   }, [inView, reduce, value]);
 
+  const final = `${value.toFixed(decimals)}${suffix}`;
+
   return (
-    <span ref={ref}>
-      <span aria-hidden="true">
+    <span ref={ref} className="inline-grid tabular-nums">
+      <span aria-hidden="true" className="invisible col-start-1 row-start-1">
+        {final}
+      </span>
+      <span aria-hidden="true" className="col-start-1 row-start-1">
         {n.toFixed(decimals)}
         {suffix}
       </span>
-      <span className="sr-only">
-        {value.toFixed(decimals)}
-        {suffix}
-      </span>
+      <span className="sr-only">{final}</span>
     </span>
   );
 }

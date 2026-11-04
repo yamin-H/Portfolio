@@ -6,6 +6,7 @@ import TLink from "@/components/ui/TLink";
 import LocalTime from "@/components/ui/LocalTime";
 import MemoryWall from "@/components/hero/MemoryWall";
 import { profile } from "@/content/profile";
+import Magnetic from "@/components/ui/Magnetic";
 
 export default function Hero() {
   return (
@@ -43,19 +44,23 @@ export default function Hero() {
         </Reveal>
 
         <Reveal delay={0.9} className="mt-10 flex flex-wrap items-center gap-4">
-          <a
-            href="#work"
-            className="inline-flex items-center gap-2 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper transition-colors duration-[240ms] hover:bg-accent"
-          >
-            See the work <span aria-hidden="true">→</span>
-          </a>
-          <TLink
-            href="/resume"
-            label="Résumé"
-            className="inline-flex items-center gap-2 border border-ink/70 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-[240ms] hover:border-accent hover:text-accent"
-          >
-            Résumé <span aria-hidden="true">→</span>
-          </TLink>
+          <Magnetic>
+            <a
+              href="#work"
+              className="press inline-flex items-center gap-2 bg-ink px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-paper hover:bg-accent"
+            >
+              See the work <span aria-hidden="true">→</span>
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <TLink
+              href="/resume"
+              label="Résumé"
+              className="press inline-flex items-center gap-2 border border-ink/70 px-5 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] hover:border-accent hover:text-accent"
+            >
+              Résumé <span aria-hidden="true">→</span>
+            </TLink>
+          </Magnetic>
           <CopyChip text="pip install yamin" />
         </Reveal>
 

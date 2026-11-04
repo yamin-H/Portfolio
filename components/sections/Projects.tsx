@@ -1,12 +1,12 @@
 import Reveal from "@/components/ui/Reveal";
 import ProjectPlate from "@/components/sections/ProjectPlate";
-import PrReviewSystem from "@/components/diagrams/pr-review/PrReviewSystem";
 import { projects } from "@/content/projects";
-import YaminSystem from "@/components/diagrams/yamin/YaminSystem";
+import PrReviewFlat from "@/components/diagrams/flat/PrReviewFlat";
+import YaminFlat from "@/components/diagrams/flat/yamin/YaminFlat";
 
 const diagrams: Record<string, React.ReactNode> = {
-    "pr-review-agent": <PrReviewSystem />,
-    yamin: <YaminSystem />,
+    "pr-review-agent": <PrReviewFlat />,
+    yamin: <YaminFlat />,
 };
 
 export default function Projects() {

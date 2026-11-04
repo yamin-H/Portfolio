@@ -236,16 +236,23 @@ body {
   box-shadow: 0 0 0 4px rgba(47, 75, 255, 0.35);
 }
 
-/* ---------- POLISH ---------- */
-::selection {
-  background: rgba(47, 75, 255, 0.18);
-  color: var(--color-ink);
+/* ---------- PRESS + FOCUS ---------- */
+button:not(:disabled),
+.press {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, scale;
+  transition-duration: 240ms;
+  transition-timing-function: var(--ease-draw);
+}
+button:not(:disabled):active,
+.press:active {
+  scale: 0.97;
 }
 
 @layer base {
   :focus-visible {
-    outline: 1.5px solid var(--color-accent);
-    outline-offset: 3px;
+    outline: 1.5px dashed var(--color-ink);
+    outline-offset: 4px;
   }
 }
 
@@ -368,4 +375,37 @@ html.lite header {
 }
 .sec-eyebrow::before {
   content: counter(sec, decimal-leading-zero) " · ";
+}
+
+/* ---------- TYPOGRAPHY ---------- */
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-kerning: normal;
+}
+
+@layer base {
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p, li, dd, figcaption, blockquote { text-wrap: pretty; }
+}
+
+/* a fluid type scale, instead of stacked breakpoints */
+.t-h2 {
+  font-size: clamp(2.25rem, 1.5rem + 2.7vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+}
+.t-display {
+  font-size: clamp(3rem, 1.4rem + 5.8vw, 5.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+}
+
+/* ---------- INTRO ---------- */
+.intro {
+  display: none;
+}
+html[data-intro="play"] .intro {
+  display: flex;
 }

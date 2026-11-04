@@ -4,6 +4,7 @@ import { memo, useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import CornerFrame from "@/components/ui/CornerFrame";
 import { ease } from "@/lib/motion";
+import { introLead } from "@/lib/intro";
 import { cards, RATIO, CARD_W, CARD_H, type Card } from "@/content/memory";
 
 type Pos = { x: number; y: number };
@@ -127,7 +128,7 @@ const WallCard = memo(function WallCard({
         transition={{
           duration: 0.45,
           ease,
-          delay: ready || reduce ? 0 : 0.3 + i * 0.035,
+          delay: ready || reduce ? 0 : introLead() + 0.3 + i * 0.035,
         }}
       >
         <div
@@ -187,7 +188,7 @@ export default function MemoryWall() {
 
   useEffect(() => {
     userUntil.current = reduce ? Infinity : performance.now() + 2400;
-    const t = setTimeout(() => setReady(true), 1500);
+    const t = setTimeout(() => setReady(true), 1500 + introLead() * 1000);
     return () => clearTimeout(t);
   }, [reduce]);
 

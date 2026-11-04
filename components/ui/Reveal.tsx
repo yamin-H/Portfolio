@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { ease, duration } from "@/lib/motion";
+import { introLead } from "@/lib/intro";
 
 export default function Reveal({
   children,
@@ -24,7 +25,7 @@ export default function Reveal({
             animate={inView ? undefined : to}
             whileInView={inView ? to : undefined}
             viewport={{ once: true, margin: "-12% 0px" }}
-            transition={{ duration: duration.settle, ease, delay }}
+            transition={{ duration: duration.settle, ease, delay: delay + (inView ? 0 : introLead()) }}
         >
             {children}
         </motion.div>

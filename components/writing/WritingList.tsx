@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import TLink from "@/components/ui/TLink";
 import { formatDate } from "@/lib/format";
 import type { PostMeta } from "@/lib/posts";
+import EmptyState from "../ui/EmptyState";
 
 const types = [
   { id: "all", label: "All" },
@@ -33,9 +34,7 @@ export default function WritingList({ posts }: { posts: PostMeta[] }) {
 
   if (posts.length === 0) {
     return (
-      <p className="border border-dashed border-rule px-6 py-12 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-        Nothing published yet
-      </p>
+      <EmptyState title="Nothing published yet" note="Posts will appear here." />
     );
   }
 
