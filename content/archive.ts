@@ -40,20 +40,21 @@ export const archive: ArchiveProject[] = [
     featured: true,
     links: [],
   },
-  // Add more like this:
-  // {
-  //   slug: "my-project",
-  //   title: "My Project",
-  //   year: "2025",
-  //   kind: "Web app",
-  //   summary: "One sentence on what it does and why it matters.",
-  //   tags: ["Full-stack"],
-  //   stack: ["Next.js", "Postgres"],
-  //   block: "queue",
-  //   links: [{ label: "GitHub", href: "https://github.com/..." }],
-  // },
+{
+  slug: "jarvis-lite",
+  title: "Jarvis Lite",
+  year: "2026",
+  kind: "Voice assistant",
+  summary:
+    "A privacy-first voice assistant and desktop agent for Windows. Wake word, speech recognition and vision run locally.",
+  tags: ["AI", "Desktop"],
+  stack: ["Python", "FastAPI", "ONNX", "Win32"],
+  block: "agent",
+  featured: true,
+  links: [],
+},
 ];
 
 // The grid appears once there are enough projects to fill it. With two it only repeats Work.
-export const MIN_GRID = 4;
+export const MIN_GRID = 1;
 export const SHOW_GRID = archive.length >= MIN_GRID;

@@ -3,6 +3,7 @@ export type SkillGroup = { label: string; tools: Tool[] };
 
 const PR = "pr-review-agent";
 const YA = "yamin";
+const JV = "jarvis-lite";
 
 export const skillGroups: SkillGroup[] = [
   {
@@ -17,14 +18,15 @@ export const skillGroups: SkillGroup[] = [
   {
     label: "Backend",
     tools: [
-      { name: "Python", usedIn: [PR, YA] },
-      { name: "FastAPI", usedIn: [PR] },
+      { name: "Python", usedIn: [PR, YA, JV] },
+      { name: "FastAPI", usedIn: [PR, JV] },
       { name: "Node.js", usedIn: [PR] },
       { name: "Express.js", usedIn: [PR] },
       { name: "REST APIs", usedIn: [] },
-      { name: "WebSocket", usedIn: [] },
+      { name: "WebSocket", usedIn: [JV] },
       { name: "SSE", usedIn: [] },
       { name: "BullMQ", usedIn: [PR] },
+      { name: "Win32 API", usedIn: [JV] },
     ],
   },
   {
@@ -36,6 +38,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "Embeddings", usedIn: [PR] },
       { name: "pgvector", usedIn: [PR] },
       { name: "Multi-provider LLM APIs", usedIn: [YA] },
+      { name: "Ollama", usedIn: [YA, JV] },
+      { name: "YOLO · ONNX", usedIn: [JV] },
     ],
   },
   {
@@ -70,6 +74,7 @@ export const links: [string, string][] = [
   ["PostgreSQL", "Neon"],
   ["Python", "FastAPI"],
   ["FastAPI", "LangGraph"],
+  ["FastAPI", "WebSocket"],
   ["LangGraph", "LangChain"],
   ["LangChain", "RAG"],
   ["RAG", "Embeddings"],
@@ -78,6 +83,9 @@ export const links: [string, string][] = [
   ["Python", "Multi-provider LLM APIs"],
   ["Python", "PyPI packaging"],
   ["Python", "CLI tooling"],
+  ["Python", "Win32 API"],
+  ["Python", "YOLO · ONNX"],
+  ["Python", "Ollama"],
   ["Git & GitHub", "CI/CD"],
   ["Docker", "CI/CD"],
 ];

@@ -72,7 +72,7 @@ function CaseLink({ project }: { project: Project }) {
     <TLink
       href={`/projects/${project.slug}`}
       label={project.title}
-      className="mt-8 inline-flex items-center gap-2 border border-ink/70 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em] transition-colors duration-[240ms] hover:border-accent hover:text-accent"
+      className="press mt-8 inline-flex items-center gap-2 border border-ink/70 px-4 py-3 font-mono text-[11px] uppercase tracking-[0.18em] hover:border-accent hover:text-accent"
     >
       Read the case study <span aria-hidden="true">→</span>
     </TLink>
@@ -81,97 +81,44 @@ function CaseLink({ project }: { project: Project }) {
 
 export default function ProjectPlate({
   project,
-  flip = false,
   diagram,
 }: {
   project: Project;
-  flip?: boolean;
   diagram?: React.ReactNode;
 }) {
-  // With a diagram: text across the top, the diagram full width below.
-  if (diagram) {
-    return (
-      <article className="py-16 sm:py-20">
-        <InkLine className="mb-14 text-ink-soft/60" />
+  return (
+    <article className="py-16 sm:py-20">
+      <InkLine className="mb-14 text-ink-soft/60" />
 
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-6">
-            <Reveal inView>
-              <Heading project={project} />
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-                {project.summary}
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="lg:col-span-6">
-            <Reveal inView delay={0.08}>
-              <Facts facts={project.facts} />
-              <div className="mt-8">
-                <StackAndLinks project={project} />
-                <CaseLink project={project} />
-              </div>
-            </Reveal>
-          </div>
+      <div className="grid gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-6">
+          <Reveal inView>
+            <Heading project={project} />
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
+              {project.summary}
+            </p>
+          </Reveal>
         </div>
 
+        <div className="lg:col-span-6">
+          <Reveal inView delay={0.08}>
+            <Facts facts={project.facts} />
+            <div className="mt-8">
+              <StackAndLinks project={project} />
+              <CaseLink project={project} />
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      {diagram && (
         <Reveal inView delay={0.1} className="mt-14">
           <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">
             Fig_0{project.index} · System design · Interactive
           </p>
           <CornerFrame className="p-4 sm:p-8">{diagram}</CornerFrame>
         </Reveal>
-      </article>
-    );
-  }
-
-  // Without a diagram yet: the original side-by-side layout.
-    return (
-        <article className="py-16 sm:py-20">
-            <InkLine className="mb-14 text-ink-soft/60" />
-
-            <div className="grid gap-12 lg:grid-cols-12">
-                <div className={`lg:col-span-6 ${flip ? "lg:order-2" : ""}`}>
-                    <Reveal inView>
-                        <Heading project={project} />
-                    </Reveal>
-
-                    <Reveal inView delay={0.08}>
-                        <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-soft">
-                            {project.summary}
-                        </p>
-                        <div className="mt-8">
-                            <Facts facts={project.facts} />
-                        </div>
-                    </Reveal>
-
-                    <Reveal inView delay={0.14}>
-                        <div className="mt-8">
-                            <StackAndLinks project={project} />
-                            <CaseLink project={project} />
-                        </div>
-                    </Reveal>
-                </div>
-
-                <Reveal
-                    inView
-                    delay={0.1}
-                    className={`lg:col-span-6 ${flip ? "lg:order-1" : ""}`}
-                >
-                    <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">
-                        Fig_0{project.index} · System design
-                    </p>
-                    <CornerFrame className="p-4 sm:p-6">
-                        <div className="flex aspect-[4/3] items-center justify-center">
-                            <p className="text-center font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-ink-soft/70">
-                                Interactive diagram
-                                <br />
-                                goes here
-                            </p>
-                        </div>
-                    </CornerFrame>
-                </Reveal>
-            </div>
-        </article>
-    );
+      )}
+    </article>
+  );
 }
