@@ -10,7 +10,7 @@ export const profile = {
   timezone: "Asia/Dhaka", // used for the live local time
   utc: "UTC+6",
   availability: "Open to remote work and relocation", // edit to what is true for you
-  portrait: "", // e.g. "/portrait.jpg": put the file in /public. A 4:5 crop works best. Empty shows a monogram plate.
+  portrait: "/portrait.jpg", // e.g. "/portrait.jpg": put the file in /public. A 4:5 crop works best. Empty shows a monogram plate.
 portraitAlt: "Portrait of Yamin Hossain",
 // DRAFT built only from your CV. Rewrite it, and add the real reason you moved into software.
 story: [
