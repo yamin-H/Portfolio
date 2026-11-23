@@ -17,7 +17,7 @@ export default function Projects() {
           Work
         </p>
         <h2 className="mt-4 max-w-2xl font-display t-h2">
-          Three projects, in depth.
+          Five projects, in depth.
         </h2>
       </Reveal>
 

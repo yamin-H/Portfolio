@@ -91,4 +91,77 @@ export const caseStudies: Record<string, CaseStudy> = {
             },
         ],
     },
+    tara: {
+        problem: [
+            "A customer-care call carries two kinds of risk: the caller shares a PIN, and the agent can take actions like buying a plan or blocking a SIM. It also has to feel like a conversation, so it has to respond quickly and let the caller cut in.",
+            "Tara is a prototype that works through those problems. It talks with callers in English and Bangla over a browser call. It runs on synthetic data and is not a production system.",
+        ],
+        decisions: [
+            {
+                title: "Stream the call, and detect the turns",
+                body: "The browser streams the microphone over a WebSocket, and Silero VAD detects when the caller starts and stops speaking, so the agent knows when a turn has ended.",
+            },
+            {
+                title: "Let the model act through tools",
+                body: "Moonshine transcribes the speech, and a Groq-hosted LLM decides what to do, calling tools against a mock billing and CRM API built with FastAPI and SQLite. All the data is synthetic.",
+            },
+            {
+                title: "Keep the PIN away from the model",
+                body: "The PIN is captured by the server and never reaches the LLM.",
+            },
+            {
+                title: "Confirm before consequential actions",
+                body: "Purchases and SIM blocks need a spoken “yes” on the next turn, so the agent can't do them from a single ambiguous sentence.",
+            },
+            {
+                title: "Let the caller interrupt",
+                body: "Kokoro speaks the reply sentence by sentence, and the caller can interrupt mid-sentence (barge-in).",
+            },
+            {
+                title: "Measure every turn",
+                body: "Each turn is timed per stage (endpointing, ASR, LLM, TTS) and shown in the UI, so it's clear where the time goes.",
+            },
+        ],
+    },
+    dwarpal: {
+  problem: [
+    "Without a gateway, every product team wires up AI providers on its own. That means scattered API keys, no view of cost, repeated payments for identical questions, and a provider outage that breaks the app.",
+    "Dwarpal sits between apps and providers such as OpenAI, Gemini and Groq. Apps talk to it, and it handles the rest.",
+  ],
+  decisions: [
+    {
+      title: "One endpoint per app",
+      body: "Every app gets a single OpenAI-compatible endpoint, with its own API key, model list, budget and settings.",
+    },
+    {
+      title: "Cache in two layers",
+      body: "Repeated questions are answered from Redis. Questions with the same meaning are answered from Qdrant, using multilingual-e5 embeddings, even across Bangla, English and Banglish.",
+    },
+    {
+      title: "Decide what must never be cached",
+      body: "Personal data and time-sensitive questions are never cached, and one tenant can never see another tenant's cached answers.",
+    },
+    {
+      title: "Survive a provider failure",
+      body: "If a provider fails, Dwarpal switches to a fallback model, and a circuit breaker stops it from hammering the broken one.",
+    },
+    {
+      title: "Put limits on usage",
+      body: "Monthly token and cost budgets return a 429 when exceeded. A tenant can be disabled, and keys can be rotated or revoked instantly.",
+    },
+    {
+      title: "Stream, and measure it",
+      body: "Answers stream word by word, and the time to the first word is measured.",
+    },
+    {
+      title: "Make it observable",
+      body: "A web console manages tenants and tests everything. Prometheus and Grafana dashboards, JSON logs, and a request ID on every response show what's happening.",
+    },
+  ],
+  lessons: [
+    "It's a portfolio project, not production software.",
+    "Streamed token counts are estimates.",
+    "The Bangla test set is small.",
+  ],
+},
 };

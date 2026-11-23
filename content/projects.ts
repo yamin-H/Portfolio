@@ -99,4 +99,74 @@ export const projects: Project[] = [
             { label: "Demo video", href: "https://drive.google.com/file/d/1V_JS8mJ6gHhXFBcHd8DJo4bcwaYyN2LS/view?usp=sharing" },
         ],
     },
+    {
+        slug: "tara",
+        index: "04",
+        title: "Tara",
+        kind: "Voice agent prototype",
+        period: "2026", // put the real month
+        summary:
+            "A prototype telecom customer-care voice agent that talks with callers in English and Bangla over a browser call. It runs on synthetic data and is not a production system.",
+        facts: [
+            "The browser streams the microphone over a WebSocket, and Silero VAD detects when you start and stop speaking",
+            "Moonshine transcribes the speech, and a Groq-hosted LLM decides what to do, calling tools against a mock billing/CRM API (FastAPI + SQLite)",
+            "Kokoro speaks each reply sentence by sentence, and you can interrupt mid-sentence (barge-in)",
+            "The PIN is captured by the server and never reaches the LLM",
+            "Purchases and SIM blocks need a spoken “yes” on the next turn",
+            "Every turn is timed per stage (endpointing, ASR, LLM, TTS) and shown in the UI",
+        ],
+        stack: [
+            "Python",
+            "FastAPI",
+            "WebSocket",
+            "Silero VAD",
+            "Moonshine",
+            "Kokoro",
+            "Groq",
+            "SQLite",
+            "httpx",
+            "pytest",
+            "ruff",
+            "Web Audio",
+        ],
+        links: [
+            { label: "GitHub", href: "https://github.com/yamin-H/telecom-call-agent" },
+            { label: "Demo video", href: "https://drive.google.com/file/d/1-iIN58QL2b2qWu2lvm6jVAknKhjyHUss/view" },
+        ],
+    },
+    {
+        slug: "dwarpal",
+        index: "05",
+        title: "Dwarpal",
+        kind: "AI gateway",
+        period: "2026", // put the real month
+        summary:
+            "A gateway that sits between apps and AI providers like OpenAI, Gemini and Groq. Apps talk to it, and it handles the rest. It's a portfolio project, not production software.",
+        facts: [
+            "One OpenAI-compatible endpoint per app, each with its own API key, model list, budget and settings",
+            "Two-layer cache: Redis for repeated questions, and Qdrant for questions with the same meaning, across Bangla, English and Banglish",
+            "Personal data and time-sensitive questions are never cached, and one tenant never sees another tenant's cached answers",
+            "If a provider fails it switches to a fallback model, and a circuit breaker stops it from hammering the broken one",
+            "Monthly token and cost budgets return a 429 when exceeded, and tenants can be disabled or keys rotated and revoked instantly",
+            "Answers stream word by word, and the time to the first word is measured",
+            "A web console, Prometheus and Grafana dashboards, JSON logs, and a request ID on every response",
+        ],
+        stack: [
+            "Python",
+            "FastAPI",
+            "Kong",
+            "LiteLLM",
+            "PostgreSQL",
+            "Redis",
+            "Qdrant",
+            "multilingual-e5",
+            "Prometheus",
+            "Grafana",
+            "Docker Compose",
+        ],
+        links: [
+            { label: "GitHub", href: "https://github.com/yamin-H/desktop-pilot" }, // check this is the Dwarpal repo
+            { label: "Demo video", href: "https://drive.google.com/file/d/1UnZ8LJ_FAif37n-2lRXOlJ8mrKdCgixB/view?usp=sharing" }, // and this
+        ],
+    },
 ];
